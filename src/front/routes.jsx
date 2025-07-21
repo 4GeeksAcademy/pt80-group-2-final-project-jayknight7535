@@ -5,6 +5,7 @@ import {
     createRoutesFromElements,
     Route,
 } from "react-router-dom";
+import React from "react"; // ✅ needed for JSX inside route definitions
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter(
         <Route path= "/" element={<Home />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
+
+         {/* ✅ Temporary Placeholder Routes */}
+            <Route path="/form" element={<h1 className="text-center mt-5">🚧 Form Page Coming Soon (Teammate's Task)</h1>} />
+            <Route path="/login" element={<h1 className="text-center mt-5">🚧 Login Page Coming Soon (Teammate's Task)</h1>} />
       </Route>
     )
 );
