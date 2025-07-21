@@ -1,0 +1,28 @@
+.transparent-navbar {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1030;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .btn {
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.navbar .btn-outline-light {
+  border-color: white;
+}
+
+.navbar .btn-outline-light:hover {
+  background-color: white;
+  color: #222 !important;
+}
+
+.hero-section {
+  padding-top: 100px;
+}

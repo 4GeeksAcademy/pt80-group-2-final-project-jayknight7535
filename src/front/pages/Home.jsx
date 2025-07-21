@@ -52,34 +52,49 @@ export const Home = () => {
 
 				<div className="my-4 d-flex flex-wrap justify-content-center">
 					<Link to="/form" className="btn btn-primary btn-lg mx-2 my-2">
-						Start Prescreening
+						Get Matched with Rentals
 					</Link>
-					<Link to="/login" className="btn btn-outline-light btn-lg mx-2 my-2">
-						Agent Login
-					</Link>
-					<Link to="/renter-login" className="btn btn-outline-light btn-lg mx-2 my-2">
-                     Renter Login
-                    </Link>
+					
 				</div>
 			</div>
 
-			<section className="mt-5 container">
-				<h2 className="text-center mb-4">How It Works</h2>
-				<div className="row mt-4">
-					<div className="col-md-4 mb-4">
-						<h4>1. Fill Out a Quick Form</h4>
-						<p>Tell us your income, credit score, and rental preferences.</p>
-					</div>
-					<div className="col-md-4 mb-4">
-						<h4>2. Get a Score & Match</h4>
-						<p>We show you apartments you qualify for, instantly.</p>
-					</div>
-					<div className="col-md-4 mb-4">
-						<h4>3. Schedule a Viewing</h4>
-						<p>Book a tour and receive confirmation by email or text.</p>
-					</div>
-				</div>
-			</section>
+			<section className="mt-5">
+  <h2 className="text-center fw-bold mb-4" data-aos="fade-up">How It Works</h2>
+  <div className="row text-center">
+    <div className="col-md-4" data-aos="fade-up" data-aos-delay="0">
+      <div className="p-4 shadow-sm rounded bg-white h-100">
+        <i className="fas fa-file-alt fa-2x mb-3 text-primary"></i>
+        <h4 className="fw-bold">Step 1: Share Your Info</h4>
+        <p>Tell us your income, credit score, and rental preferences.</p>
+      </div>
+    </div>
+
+    <div className="col-md-4" data-aos="fade-up" data-aos-delay="200">
+      <div className="p-4 shadow-sm rounded bg-white h-100">
+        <i className="fas fa-chart-line fa-2x mb-3 text-success"></i>
+        <h4 className="fw-bold">Step 2: Instantly Get Matched</h4>
+        <p>We show you apartments you qualify for, instantly.</p>
+      </div>
+    </div>
+
+    <div className="col-md-4" data-aos="fade-up" data-aos-delay="400">
+      <div className="p-4 shadow-sm rounded bg-white h-100">
+        <i className="fas fa-calendar-check fa-2x mb-3 text-info"></i>
+        <h4 className="fw-bold">Step 3: Book a Tour</h4>
+        <p>Book a tour and receive confirmation by email or text.</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="text-center mt-5" data-aos="fade-up" data-aos-delay="600">
+    <Link to="/form" className="btn btn-primary btn-lg">
+      Get Started Now
+    </Link>
+  </div>
+</section>
+
+
+
 		</>
 	);
 };
