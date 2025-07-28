@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/img/rentmatch-logo.png"; // Make sure this is correct
 
 export const Navbar = () => {
-
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+		<nav className="navbar fixed-top transparent-navbar">
+			<div className="container d-flex justify-content-between align-items-center py-2">
+				<Link to="/" className="navbar-brand d-flex align-items-center">
+					<img src={logo} alt="RentMatch" height="60" width="250" />
 				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
+				<div className="d-flex gap-2">
+					<Link to="/renter-login" className="btn btn-outline-light btn-sm">
+						Renter Login
+					</Link>
+					<Link to="/login" className="btn btn-outline-light btn-sm">
+						Agent Login
 					</Link>
 				</div>
 			</div>
