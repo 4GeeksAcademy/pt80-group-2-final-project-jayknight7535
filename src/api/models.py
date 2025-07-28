@@ -32,6 +32,14 @@ class RenterForm(db.Model):
     credit_score = db.Column(db.Integer)
     pets = db.Column(db.Boolean)
     move_in_date = db.Column(db.Date)
+    email: Mapped[str] = mapped_column(nullable=False) 
+    user_name: Mapped[str] 
+    zip_code:Mapped[int]
+    budget:Mapped[int]
+    bedrooms:Mapped[int]
+    criminal_record:Mapped[bool]
+    parking:Mapped[str]
+    phone_number:Mapped[int]
 
     user = db.relationship('User', backref='renter_forms')
 
@@ -44,7 +52,14 @@ class RenterForm(db.Model):
             "income": self.income,
             "credit_score": self.credit_score,
             "pets": self.pets,
-            "move_in_date": self.move_in_date.isoformat() if self.move_in_date else None
+            "move_in_date": self.move_in_date.isoformat() if self.move_in_date else None,
+            "email" : self.email,
+            "zip_code" : self.zip_code,
+            "budget": self.budget,
+            "bedrooms" : self.bedrooms,
+            "criminal_record": self.criminal_record,
+            "parking" : self.parking,
+            "phone_number" : self.phone_number
         }
 
     

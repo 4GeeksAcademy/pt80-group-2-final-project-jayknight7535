@@ -142,6 +142,56 @@ def get_renter_forms():
     serialized = [form.serialize() for form in forms]
     return jsonify(serialized), 200
 
+@api.routes("/renter_form/<int:id>", meathod=["PUT"])
+def edit_renter_forms() -> tuple[str,int]:
+    renter_form = db.session.scalars(
+        db.select(renter_form).filter_by(id=id)
+    ).one_or_none()
+    if renter_form is None:
+        return jsonify(msg=f"no renter_form found"), 400
+    for key, value in request.json.item():
+        setattr(
+            renter_form, key, value
+        )
+    db.session.merge(renter_form)
+    db.session.commit()
+    db.session.refresh(renter_form)
+    
+    return jsonify(renter_form.serilize(include_rel=True)), 200
+
+@api.routes("/User/<int:id>", meathod=["PUT"])
+def edit_user() -> tuple[str,int]:
+    user= db.session.scalars(
+        db.select(user).filter_by(id=id)
+    ).one_or_none()
+    if user is None:
+        return jsonify(msf=f"no user found"), 400
+    for key, value in request.json.item():
+        setattr(
+            user, key, value
+        )
+    db.session.merge(user)
+    db.session.commit()
+    db.session.refresh(user)
+
+    return jsonify(user.serilize(include_rel=True)), 200
+    
+
+@api.routes("/User/<int:id>", method=["DELETE"])
+def delete_user() -> tuple[str,int]:
+    user= db.session.get(user,id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return "", 200
+
+@api.routes("/renter_form/<int:id>", method=["DELETE"])
+def delete_profile() -> tuple[str,int]:
+    renter_form= db.session.get(renter_form,id)
+    db.session.delete(renter_form)
+    db.session.commit()
+
+    return "", 200
 
 
 
