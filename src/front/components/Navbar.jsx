@@ -15,6 +15,10 @@ export const Navbar = () => {
 					<Link to="/login" className="btn btn-outline-light btn-sm">
 						Agent Login
 					</Link>
+					<Link to="/listings" className="btn btn-outline-dark mx-2">
+                     Browse Listings
+                    </Link>
+
 				</div>
 			</div>
 		</nav>
