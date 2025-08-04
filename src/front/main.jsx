@@ -7,6 +7,7 @@ import { StoreProvider } from './hooks/useGlobalReducer';
 import { BackendURL } from './components/BackendURL';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import 'leaflet/dist/leaflet.css';
 
 const Main = () => {
     useEffect(() => {

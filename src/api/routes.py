@@ -9,6 +9,7 @@ from flask import request, jsonify
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
 from .models import db, User
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -34,12 +35,14 @@ def signup():
     data = request.get_json()
     hashed = generate_password_hash(data['password'])
 
+    dob = datetime.strptime(data['dob'], "%Y-%m-%d").date()
+
     user = User(
         email=data['email'],
         password=hashed,
         is_agent=data.get('is_agent', False),
         name=data.get("name"),
-        dob=data.get("dob")  
+        dob= dob  
 
     )
 
@@ -106,12 +109,23 @@ def renter_form():
     data = request.get_json()
     
     try:
+
+        move_in = datetime.strptime(data.get("move_in_date"), "%Y-%m-%d").date()
+
         form = RenterForm(
-            user_id=current_user_id,
-            income=data.get("income"), 
+             user_id=current_user_id,
+            income=data.get("income"),
             credit_score=data.get("credit_score"),
             pets=data.get("pets"),
-            move_in_date=data.get("move_in_date")
+            move_in_date=move_in,
+            email=data.get("email"),
+            user_name=data.get("user_name"),
+            zip_code=data.get("zip_code"),
+            budget=data.get("budget"),
+            bedrooms=data.get("bedrooms"),
+            criminal_record=data.get("criminal_record"),
+            parking=data.get("parking"),
+            phone_number=data.get("phone_number")
         )
 
         db.session.add(form)
@@ -141,25 +155,28 @@ def get_renter_forms():
     serialized = [form.serialize() for form in forms]
     return jsonify(serialized), 200
 
-@api.routes("/renter_form/<int:id>", meathod=["PUT"])
-def edit_renter_forms() -> tuple[str,int]:
+
+
+@api.route("/renter_form/<int:id>", methods=["PUT"])
+def edit_renter_forms(id :int) -> tuple[str,int]:
     renter_form = db.session.scalars(
         db.select(renter_form).filter_by(id=id)
     ).one_or_none()
     if renter_form is None:
         return jsonify(msg=f"no renter_form found"), 400
-    for key, value in request.json.item():
+    for key, value in request.json.items():
+
         setattr(
             renter_form, key, value
-        )
+         )
     db.session.merge(renter_form)
     db.session.commit()
     db.session.refresh(renter_form)
     
-    return jsonify(renter_form.serilize(include_rel=True)), 200
+    return jsonify(renter_form.serialize()), 200
 
-@api.routes("/User/<int:id>", meathod=["PUT"])
-def edit_user() -> tuple[str,int]:
+@api.route("/User/<int:id>", methods=["PUT"])
+def edit_user(id : int ) -> tuple[str,int]:
     user= db.session.scalars(
         db.select(user).filter_by(id=id)
     ).one_or_none()
@@ -176,16 +193,16 @@ def edit_user() -> tuple[str,int]:
     return jsonify(user.serilize(include_rel=True)), 200
     
 
-@api.routes("/User/<int:id>", method=["DELETE"])
-def delete_user() -> tuple[str,int]:
+@api.route("/User/<int:id>", methods=["DELETE"])
+def delete_user(id : int ) -> tuple[str,int]:
     user= db.session.get(user,id)
     db.session.delete(user)
     db.session.commit()
 
     return "", 200
 
-@api.routes("/renter_form/<int:id>", method=["DELETE"])
-def delete_profile() -> tuple[str,int]:
+@api.route("/renter_form/<int:id>", methods=["DELETE"])
+def delete_profile(id : int) -> tuple[str,int]:
     renter_form= db.session.get(renter_form,id)
     db.session.delete(renter_form)
     db.session.commit()
@@ -195,3 +212,27 @@ def delete_profile() -> tuple[str,int]:
 
 
 
+
+
+
+@api.route('/agent/dashboard', methods=['GET'])
+@jwt_required()
+def get_agent_dashboard():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user.is_agent:
+        return jsonify({"msg": "Not Allowed user is not an agent"}), 403
+
+    forms = RenterForm.query.all()
+
+    serialized = []
+    for form in forms:
+        renter = User.query.get(form.user_id)  # 🔥 THIS LINE
+        serialized.append({
+            **form.serialize(),
+            "user_name": renter.name if renter else "Unknown",
+            "email": renter.email if renter else "Unknown"  # 🔥 AND THIS LINE
+        })
+
+    return jsonify({"forms": serialized, "agent": user.serialize()}), 200

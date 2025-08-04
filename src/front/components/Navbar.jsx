@@ -9,7 +9,7 @@ export const Navbar = () => {
 					<img src={logo} alt="RentMatch" height="60" width="250" />
 				</Link>
 				<div className="d-flex gap-2">
-					<Link to="/renter-login" className="btn btn-outline-light btn-sm">
+					<Link to="/login" className="btn btn-outline-light btn-sm">
 						Renter Login
 					</Link>
 					<Link to="/login" className="btn btn-outline-light btn-sm">

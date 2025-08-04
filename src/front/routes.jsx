@@ -5,14 +5,17 @@ import {
     createRoutesFromElements,
     Route,
 } from "react-router-dom";
-import React from "react"; // ✅ needed for JSX inside route definitions
+import React from "react"; //
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import Listings from "./pages/Listings";
+import { Login } from "./pages/Login";
+import { RealtorsDashboard } from "./pages/RealtorDashboard";
 import { renterForm} from "./pages/Renter_form";
 import { renterFormPage } from "./pages/Renter_forms_page";
+
 
 
 export const router = createBrowserRouter(
@@ -35,10 +38,13 @@ export const router = createBrowserRouter(
         
         <Route path="/listings" element={<Listings />} />
 
+        <Route path="/login" element={<Login />} />
+        <Route path="/realtors-dashboard" element={<RealtorsDashboard />} />
+
 
          {/* ✅ Temporary Placeholder Routes */}
             <Route path="/form" element={<h1 className="text-center mt-5">🚧 Form Page Coming Soon (Teammate's Task)</h1>} />
-            <Route path="/login" element={<h1 className="text-center mt-5">🚧 Login Page Coming Soon (Teammate's Task)</h1>} />
+           
       </Route>
     )
 );
