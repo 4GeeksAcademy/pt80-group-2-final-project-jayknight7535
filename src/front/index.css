@@ -1,11 +1,19 @@
 .transparent-navbar {
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 1030;
+  background-color: rgba(0, 0, 0, 0.349);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.scrolled-navbar {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
+
+
+
 
 .navbar .nav-link,
 .navbar .navbar-brand,
