@@ -35,7 +35,9 @@ def signup():
     data = request.get_json()
     hashed = generate_password_hash(data['password'])
 
-    dob = datetime.strptime(data['dob'], "%Y-%m-%d").date()
+
+    dob_str = data.get("dob")
+    dob = datetime.strptime(dob_str, "%Y-%m-%d").date() 
 
     user = User(
         email=data['email'],
