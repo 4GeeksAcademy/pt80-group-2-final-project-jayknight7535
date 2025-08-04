@@ -38,7 +38,7 @@ class RenterForm(db.Model):
     pets = db.Column(db.Boolean)
     move_in_date = db.Column(db.Date)
     email: Mapped[str] = mapped_column(nullable=False) 
-    user_name: Mapped[str] 
+    name: Mapped[str] 
     zip_code:Mapped[int]
     budget:Mapped[int]
     bedrooms:Mapped[int]
@@ -52,7 +52,7 @@ class RenterForm(db.Model):
         return{
             "id": self.id,
             "user_id": self.user_id, 
-            "user_name": self.user.name,                      
+            "name": self.user.name,                      
             "user_dob": self.user.dob.isoformat() if self.user.dob else None,  
             "income": self.income,
             "credit_score": self.credit_score,

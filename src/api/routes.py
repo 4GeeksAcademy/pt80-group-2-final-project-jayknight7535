@@ -147,7 +147,6 @@ def renter_form():
 def get_renter_forms():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-
     if user.is_agent:
         forms = RenterForm.query.all()
     else:

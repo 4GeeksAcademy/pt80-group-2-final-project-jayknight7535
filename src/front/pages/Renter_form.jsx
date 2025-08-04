@@ -1,4 +1,17 @@
 export const renterForm = () => {
+    const handleSubmit = async(ev) => {
+        ev.preventDefault();
+        const resp = await fetch(
+            `import.meta.env.VITE_BACKEND_URL`,
+            {
+                meathod: "POST",
+                headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(renterForm),
+      }
+        )
+    }
 
     return(
        <form>
@@ -73,7 +86,7 @@ export const renterForm = () => {
                 <span class="input-group-text">$</span>
                 <input type="text" class="form-control"/>
             </div>
-            <button type="button" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onSubmit={handleSubmit}>Submit</button>
 
         </form>
     )
