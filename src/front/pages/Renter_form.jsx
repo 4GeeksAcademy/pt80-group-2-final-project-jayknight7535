@@ -1,6 +1,9 @@
+import { Link, useNavigate } from "react-router-dom";
+
 export const renterForm = () => {
     const handleSubmit = async(ev) => {
         ev.preventDefault();
+        const navigate = useNavigate()
         const resp = await fetch(
             `import.meta.env.VITE_BACKEND_URL`,
             {
@@ -10,11 +13,13 @@ export const renterForm = () => {
         },
         body: JSON.stringify(renterForm),
       }
-        )
+        );
+        navigate('/renter-form')
+
     }
 
     return(
-       <form>
+       <form onSubmit={handleSubmit}>
             <div class="mb-3">
                 <label  class="form-label">Email address</label>
                 <input type="email" class="form-control" placeholder="name@example.com"/>
@@ -86,7 +91,7 @@ export const renterForm = () => {
                 <span class="input-group-text">$</span>
                 <input type="text" class="form-control"/>
             </div>
-            <button type="button" class="btn btn-primary" onSubmit={handleSubmit}>Submit</button>
+                <button type="button" class="btn btn-primary">Submit</button>
 
         </form>
     )
