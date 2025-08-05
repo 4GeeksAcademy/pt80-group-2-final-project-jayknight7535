@@ -14,7 +14,8 @@ import Listings from "./pages/Listings";
 import { Login } from "./pages/Login";
 import { RealtorsDashboard } from "./pages/RealtorDashboard";
 import RenterFormPage from "./pages/Renter_forms_page";
-
+import { ChooseRole } from "./pages/SignupRolePick";
+import { RealtorSignup } from "./pages/RealtorSignup";
 
 
 export const router = createBrowserRouter(
@@ -40,6 +41,9 @@ export const router = createBrowserRouter(
 
         <Route path="/login" element={<Login />} />
         <Route path="/realtors-dashboard" element={<RealtorsDashboard />} />
+        <Route path="/choose-role" element={<ChooseRole />} />
+        <Route path="/realtors_signup" element={<RealtorSignup />} />
+
 
 
          {/* ✅ Temporary Placeholder Routes */}

@@ -51,7 +51,13 @@ def signup():
     db.session.add(user)
     db.session.commit()
 
-    return jsonify({"msg" : "User created"}), 201
+    token = create_access_token(identity= str (user.id)) # makes a token when a user signs up 
+
+    return jsonify({
+        "msg" : "User created",
+        "token" : token,  # returns token that was created and stores it = 
+        "user" : user.serialize()
+        }), 201
 
 
 # login EndPoint

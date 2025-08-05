@@ -9,11 +9,11 @@ export const Navbar = () => {
 					<img src={logo} alt="RentMatch" height="60" width="250" />
 				</Link>
 				<div className="d-flex gap-2">
-					<Link to="/login" className="btn btn-outline-light btn-sm">
-						Renter Login
+					<Link to="/choose-role" className="btn btn-outline-light btn-m">
+						Signup
 					</Link>
-					<Link to="/login" className="btn btn-outline-light btn-sm">
-						Agent Login
+					<Link to="/login" className="btn btn-outline-light btn-m">
+						 Login  
 					</Link>
 					<Link to="/listings" className="btn btn-outline-dark mx-2">
                      Browse Listings
