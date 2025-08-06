@@ -1,35 +1,66 @@
+import { useState, useEffect } from "react";
 const RenterFormPage = () => {
 
   const [data, setData] = useState({}); // <- You need a state to hold your data
 
   useEffect(() => {
     const loadData = async () => {
-      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/renter/form`);
-      const result = await resp.json();
+      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/renter/forms`) 
+      const result = await resp.json()
       setData(result);
     };
 
     loadData();
   }, []);
+  const editRenterForm = async () => {
+    const resp = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(renter_form),
+      }
+    );
+    const data = await resp.json();
+  };
+
+  const deleteRenterForm = async () => {
+    const resp = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (resp.ok) {
+      nav("/");
+    }
+  };
 
   const rating = () => {
     if (data.credit_score > 700 || data.income > 70000) {
-      return <div style={{ color: "green" }}>High</div>;
+      return <div  style={{ color: "green" }}>High</div>;
     } else if (data.credit_score < 600 || data.income < 40000) {
-      return <div style={{ color: "yellow" }}>Low</div>;
+      return <div style={{ color: "red" }}>Low</div>;
     } else {
-      return <div style={{ color: "red" }}>Medium</div>;
+      return <div class="fs-1"  style={{ color: "yellow", fontWeight: "bold" }}>Medium</div>;
     }
   };
 
   return (
-    <div>
+    <div className= "container mt-5 pt-5">
+      <div className="mb-3 ps-5" style={{fontSize: "50px", fontWeight: "bold"}}>Your Renter Information</div>
       <div>
         <h2>Chance of approval</h2>
         {rating()}
       </div>
 
-      <div className="mb-3">
+      <div className="mb-3 mt-5">
         <h2>Email:</h2>
         <p>{data.email}</p>
       </div>
@@ -83,9 +114,11 @@ const RenterFormPage = () => {
       </div>
 
       <button type="button" className="btn btn" onClick={editRenterForm}>
+        <h5>edit</h5>
         <i className="fa-solid fa-pencil"></i>
       </button>
       <button type="button" className="btn btn" onClick={deleteRenterForm}>
+        <h5>delete</h5>
         <i className="fa-solid fa-trash-can"></i>
       </button>
     </div>
