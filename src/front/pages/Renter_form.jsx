@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 
-export const renterForm = () => {
+export const RenterForm = () => {
     const handleSubmit = async(ev) => {
         ev.preventDefault();
         const navigate = useNavigate()
@@ -19,6 +19,10 @@ export const renterForm = () => {
     }
 
     return(
+
+
+       <div className="container ps-4" style={{ paddingTop: "120px", marginTop: "50px" }}>
+
        <form onSubmit={handleSubmit}>
             <div class="mb-3">
                 <label  class="form-label">Email address</label>
@@ -94,5 +98,7 @@ export const renterForm = () => {
                 <button type="button" class="btn btn-primary">Submit</button>
 
         </form>
+        </div>
     )
 }
+
