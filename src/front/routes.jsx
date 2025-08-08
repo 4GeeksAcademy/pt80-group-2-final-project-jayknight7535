@@ -16,6 +16,9 @@ import { RealtorsDashboard } from "./pages/RealtorDashboard";
 import { RentersDashboard } from "./pages/RentersDashboard"; 
 import RenterFormPage from "./pages/Renter_forms_page";
 import { ChooseRole } from "./pages/SignupRolePick";
+import { RenterForm } from "./pages/Renter_form";
+
+
 import { RealtorSignup } from "./pages/RealtorSignup";
 import { RenterForm } from "./pages/Renter_form";
 import { RentersSignup } from "./pages/RentersSignup";
@@ -36,6 +39,9 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
         <Route path= "/renterform" element={<renterForm/>}/>
+        <Route path="/renter-form" element={<RenterFormPage />} />
+        <Route path="/form" element={<RenterForm />} />
+
         <Route path="/renter/forms" element={<RenterFormPage />} />
 
         
@@ -50,10 +56,6 @@ export const router = createBrowserRouter(
         <Route path="/renters-dashboard" element={<RentersDashboard />} />
 
 
-
-
-         {/* ✅ Temporary Placeholder Routes */}
-            <Route path="/form" element={<h1 className="text-center mt-5">🚧 Form Page Coming Soon (Teammate's Task)</h1>} />
            
       </Route>
     )
