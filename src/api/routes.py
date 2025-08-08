@@ -292,11 +292,28 @@ def get_agent_dashboard():
 
     serialized = []
     for form in forms:
-        renter = User.query.get(form.user_id)  # 🔥 THIS LINE
+        renter = User.query.get(form.user_id)
         serialized.append({
             **form.serialize(),
             "user_name": renter.name if renter else "Unknown",
-            "email": renter.email if renter else "Unknown"  # 🔥 AND THIS LINE
+            "email": renter.email if renter else "Unknown" 
         })
 
     return jsonify({"forms": serialized, "agent": user.serialize()}), 200
+
+
+
+@api.route('/renter/dashboard', methods=['GET'])
+@jwt_required()
+def renter_dashboard():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user or user.is_agent:
+        return jsonify({"msg": "Not allowed"}), 403
+
+    # latest form for this user (or None)
+    form = RenterForm.query.filter_by(user_id=current_user_id).order_by(RenterForm.id.desc()).first()
+    return jsonify({
+        "user": user.serialize(),
+        "form": form.serialize() if form else None
+    }), 200
