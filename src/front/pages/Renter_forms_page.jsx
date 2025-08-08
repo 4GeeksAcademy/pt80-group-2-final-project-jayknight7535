@@ -14,7 +14,7 @@ const RenterFormPage = () => {
   }, []);
   const editRenterForm = async () => {
     const resp = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}`,
+      `${import.meta.env.VITE_BACKEND_URL}/renter_form/<int:id>`,
       {
         method: "PUT",
         headers: {
