@@ -16,7 +16,7 @@ import { RealtorsDashboard } from "./pages/RealtorDashboard";
 import { RentersDashboard } from "./pages/RentersDashboard"; 
 import RenterFormPage from "./pages/Renter_forms_page";
 import { ChooseRole } from "./pages/SignupRolePick";
-import { RenterForm } from "./pages/Renter_form";
+
 
 
 import { RealtorSignup } from "./pages/RealtorSignup";
