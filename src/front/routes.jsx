@@ -13,10 +13,12 @@ import { Demo } from "./pages/Demo";
 import Listings from "./pages/Listings";
 import { Login } from "./pages/Login";
 import { RealtorsDashboard } from "./pages/RealtorDashboard";
+import { RentersDashboard } from "./pages/RentersDashboard"; 
 import RenterFormPage from "./pages/Renter_forms_page";
 import { ChooseRole } from "./pages/SignupRolePick";
 import { RealtorSignup } from "./pages/RealtorSignup";
-
+import { RenterForm } from "./pages/Renter_form";
+import { RentersSignup } from "./pages/RentersSignup";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -34,7 +36,7 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
         <Route path= "/renterform" element={<renterForm/>}/>
-        <Route path="/renter-form" element={<RenterFormPage />} />
+        <Route path="/renter/forms" element={<RenterFormPage />} />
 
         
         <Route path="/listings" element={<Listings />} />
@@ -43,6 +45,10 @@ export const router = createBrowserRouter(
         <Route path="/realtors-dashboard" element={<RealtorsDashboard />} />
         <Route path="/choose-role" element={<ChooseRole />} />
         <Route path="/realtors_signup" element={<RealtorSignup />} />
+        <Route path="/renter-form" element={<RenterForm />} />
+        <Route path="/renters_signup" element={<RentersSignup />} />
+        <Route path="/renters-dashboard" element={<RentersDashboard />} />
+
 
 
 
