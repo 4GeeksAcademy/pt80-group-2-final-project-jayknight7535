@@ -8,7 +8,6 @@ from flask_cors import CORS
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
-from .models import db, User
 from datetime import datetime
 
 api = Blueprint('api', __name__)
@@ -28,37 +27,38 @@ def handle_hello():
 
 
 
-#SignupEndpoint
-
+# Signup Endpoint
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     hashed = generate_password_hash(data['password'])
 
-
     dob_str = data.get("dob")
-    dob = datetime.strptime(dob_str, "%Y-%m-%d").date() 
+    dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
+
+    security_question = (data.get("security_question") or "").strip()
+    security_answer   = (data.get("security_answer")   or "").strip()
 
     user = User(
         email=data['email'],
         password=hashed,
         is_agent=data.get('is_agent', False),
         name=data.get("name"),
-        dob= dob  
-
+        dob=dob, 
+        security_question=security_question,
+        security_answer=security_answer,
     )
 
     db.session.add(user)
     db.session.commit()
 
-    token = create_access_token(identity= str (user.id)) # makes a token when a user signs up 
+    token = create_access_token(identity=str(user.id))  # tiny spacing cleanup
 
     return jsonify({
-        "msg" : "User created",
-        "token" : token,  # returns token that was created and stores it = 
-        "user" : user.serialize()
-        }), 201
-
+        "msg": "User created",
+        "token": token,
+        "user": user.serialize()
+    }), 201
 
 # login EndPoint
 
