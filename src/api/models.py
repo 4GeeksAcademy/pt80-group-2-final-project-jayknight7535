@@ -13,8 +13,10 @@ class User(db.Model):
     is_agent = db.Column(db.Boolean, default=False)  # <= THIS is the key
     name = db.Column(db.String(100))  
     dob = db.Column(db.Date)     
-
-
+    security_question = db.Column(db.String(255), nullable=False)
+    security_answer = db.Column(db.String(255), nullable=False)
+    def set_security_answer(self, answer):
+       self.security_answer_hash = generate_security_answer_hash(answer)
 
     def serialize(self):
         return {
@@ -22,6 +24,8 @@ class User(db.Model):
             "email": self.email,
             "is_agent": self.is_agent,
             "name": self.name,
+            "securtity_question":self.security_question,
+            "securtity_answer": self.security_answer,
             "user_dob": (
             date.fromisoformat(self.dob).isoformat()
             if isinstance(self.dob, str)
