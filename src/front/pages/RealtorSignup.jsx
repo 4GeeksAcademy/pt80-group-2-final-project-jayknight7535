@@ -121,6 +121,29 @@ export const RealtorSignup = () => {
 						/>
 					</div>
 
+					<div className="mb-3">
+						<label htmlFor="security question" className="form-label">Chose a security question</label>
+						<input
+							type="security question"
+							name="security question"
+							className="form-control"
+							value={form.securtity_question}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+						<div className="mb-3">
+						<label htmlFor="answer" className="form-label">what is the answer for the security question</label>
+						<input
+							type="answer security question"
+							name="answer security question"
+							className="form-control"
+							value={form.security_answer}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+
 					<button type="submit" className="btn btn-success w-100">
 						Sign Up as Realtor
 					</button>
