@@ -20,8 +20,13 @@ import { RenterForm } from "./pages/Renter_form";
 
 
 import { RealtorSignup } from "./pages/RealtorSignup";
+
 import { RenterForm } from "./pages/Renter_form";
 import { RentersSignup } from "./pages/RentersSignup";
+import { PasswordResetEmail } from "./pages/password_reset_email";
+import { SecurityQuestion } from "./pages/password_reset_question";
+import { PasswordReset } from "./pages/password_reset";
+
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -40,9 +45,16 @@ export const router = createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path= "/renterform" element={<renterForm/>}/>
         <Route path="/renter-form" element={<RenterFormPage />} />
+
+        <Route path="/passwordreset" element={<PasswordResetEmail/>} />
+        <Route path="/securityquestion" element={<SecurityQuestion/>}/>
+        <Route path="/newpassword" element={<PasswordReset/>}/>
         <Route path="/form" element={<RenterForm />} />
 
+
         <Route path="/renter/forms" element={<RenterFormPage />} />
+
+          13ef7a478982f4174868a5c3c4224939f5463de1
 
         
         <Route path="/listings" element={<Listings />} />

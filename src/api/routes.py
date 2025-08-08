@@ -66,13 +66,11 @@ def signup():
 def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()
-
-    if not user or not check_password_hash(user.password, data['password']):
-        return jsonify({"msg": " NOPE!,Invalid Password"}), 401 
-    
     token = create_access_token(identity=str(user.id)) 
-
-    return jsonify({
+    if not user or not check_password_hash(user.password, data['password']):
+        return jsonify({"msg": " NOPE! Invalid Password"}), 401 
+    else:
+        return jsonify({
         "token": token,
         "user": user.serialize()
     }), 200 
@@ -217,10 +215,68 @@ def delete_profile(id : int) -> tuple[str,int]:
 
     return "", 200
 
+@api.route("/password-reset", methods=["POST"])
+def findEmail():
+    email=request.json("email")
+    user = db.session.scalars(
+        db.select(User)
+        .filter_by(email=email)
+    ).one_or_none()
+    if not email:
+        return jsonify(msg="No account with that email"), 401
+    
+@api.route("/verify-answer", methods=["POST"])
+def verify_security_answer():
+    data = request.get_json()
+    email = data.get("email")
+    answer = data.get("answer")
 
+    if not email or not answer:
+        return jsonify(msg="Email and answer are required."), 400
 
+    user = db.session.scalar(db.select(User).filter_by(email=email))
+    if not user:
+        return jsonify(msg="User not found"), 404
 
+    if not user.check_security_answer(answer):
+        return jsonify(msg="Incorrect answer"), 401
 
+    return jsonify(msg="Answer verified"), 200
+    
+@api.route("/update-security-question", methods=["PUT"])
+@jwt_required()
+def update_security_question():
+    user_id = get_jwt_identity()
+    user = db.session.get(User, user_id)
+
+    data = request.get_json()
+    question = data.get("security_question")
+    answer = data.get("security_answer")
+
+    if not question or not answer:
+        return jsonify(msg="Both question and answer required"), 400
+
+    user.security_question = question
+    user.set_security_answer(answer)  # re-hash new answer
+    db.session.commit()
+
+@api.route("/reset-password", methods=["PUT"])
+def reset_password():
+    data = request.get_json()
+    email = data.get("email")
+    new_password = data.get("password")
+
+    if not email or not new_password:
+        return jsonify(msg="Missing email or password"), 400
+
+    user = db.session.scalar(db.select(User).filter_by(email=email))
+    if not user:
+        return jsonify(msg="User not found"), 404
+
+    user.set_password(new_password)  # make sure this hashes the password
+    db.session.commit()
+
+    return jsonify(msg="Password reset successful"), 200
 
 
 @api.route('/agent/dashboard', methods=['GET'])

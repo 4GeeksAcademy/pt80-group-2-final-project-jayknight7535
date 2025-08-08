@@ -8,7 +8,7 @@ export const Login = () => {
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (ev) => {
 		e.preventDefault();
 
 		try {
@@ -35,7 +35,7 @@ export const Login = () => {
 			if (data.user.is_agent) {
 				navigate("/realtors-dashboard");
 			} else {
-				navigate("/renters-dashboard");
+				navigate("/renter-form");
 			}
 		} catch (err) {
 			setError("Something went wrong!");
