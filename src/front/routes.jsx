@@ -15,6 +15,9 @@ import { Login } from "./pages/Login";
 import { RealtorsDashboard } from "./pages/RealtorDashboard";
 import RenterFormPage from "./pages/Renter_forms_page";
 import { ChooseRole } from "./pages/SignupRolePick";
+import { RenterForm } from "./pages/Renter_form";
+
+
 import { RealtorSignup } from "./pages/RealtorSignup";
 import { PasswordResetEmail } from "./pages/password_reset_email";
 import { SecurityQuestion } from "./pages/password_reset_question";
@@ -38,9 +41,14 @@ export const router = createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path= "/renterform" element={<renterForm/>}/>
         <Route path="/renter-form" element={<RenterFormPage />} />
+<<<<<<< HEAD
         <Route path="/passwordreset" element={<PasswordResetEmail/>} />
         <Route path="/securityquestion" element={<SecurityQuestion/>}/>
         <Route path="/newpassword" element={<PasswordReset/>}/>
+=======
+        <Route path="/form" element={<RenterForm />} />
+
+>>>>>>> 13ef7a478982f4174868a5c3c4224939f5463de1
 
         
         <Route path="/listings" element={<Listings />} />
@@ -50,10 +58,6 @@ export const router = createBrowserRouter(
         <Route path="/choose-role" element={<ChooseRole />} />
         <Route path="/realtors_signup" element={<RealtorSignup />} />
 
-
-
-         {/* ✅ Temporary Placeholder Routes */}
-            <Route path="/form" element={<h1 className="text-center mt-5">🚧 Form Page Coming Soon (Teammate's Task)</h1>} />
            
       </Route>
     )
