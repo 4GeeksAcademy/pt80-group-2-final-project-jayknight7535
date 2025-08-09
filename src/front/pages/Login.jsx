@@ -10,7 +10,7 @@ export const Login = () => {
 	
 
 	const handleSubmit = async (ev) => {
-		e.preventDefault();
+		ev.preventDefault();
 		
 
 		try {
