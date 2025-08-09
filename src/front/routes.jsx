@@ -50,11 +50,7 @@ export const router = createBrowserRouter(
         <Route path="/securityquestion" element={<SecurityQuestion/>}/>
         <Route path="/newpassword" element={<PasswordReset/>}/>
         <Route path="/form" element={<RenterForm />} />
-
-
-        <Route path="/renter/forms" element={<RenterFormPage />} />
-
-          13ef7a478982f4174868a5c3c4224939f5463de1
+ 13ef7a478982f4174868a5c3c4224939f5463de1
 
         
         <Route path="/listings" element={<Listings />} />

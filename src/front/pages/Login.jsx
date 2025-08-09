@@ -7,9 +7,11 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	
 
 	const handleSubmit = async (ev) => {
 		e.preventDefault();
+		
 
 		try {
 			const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
@@ -91,6 +93,8 @@ export const Login = () => {
 				<button type="submit" className="btn btn-primary w-100">
 					Log In
 				</button>
+
+				 
 			</form>
 		</div>
 	</div>
