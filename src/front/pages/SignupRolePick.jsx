@@ -6,7 +6,7 @@ import signupImg from "../assets/img/signup-img.jpg";
 export const ChooseRole = () => {
 	const navigate = useNavigate();
 
-	return (
+	return (      
 		<div
 			className="d-flex justify-content-center align-items-center"
 			style={{
@@ -27,7 +27,7 @@ export const ChooseRole = () => {
 				<div className="d-flex justify-content-center gap-3">
 					<button
 						className="btn btn-outline-primary btn-lg w-50"
-						onClick={() => navigate("/renter/forms")}
+						onClick={() => navigate("/renters_signup")}
 					>
 						I am a Renter
 					</button>

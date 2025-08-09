@@ -9,6 +9,8 @@ export const RealtorSignup = () => {
 		email: "",
 		password: "",
 		dob: "",
+		security_question: "",
+        security_answer: "",
 	});
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
@@ -122,26 +124,16 @@ export const RealtorSignup = () => {
 					</div>
 
 					<div className="mb-3">
-						<label htmlFor="security question" className="form-label">Chose a security question</label>
-						<input
-							type="security question"
-							name="security question"
-							className="form-control"
-							value={form.securtity_question}
-							onChange={handleChange}
-							required
-						/>
+						<label htmlFor="security_question" className="form-label">Security Question</label>
+						<input type="text" name="security_question" className="form-control"
+						placeholder="e.g., What is your pet's name?"
+						value={form.security_question} onChange={handleChange} required />
 					</div>
-						<div className="mb-3">
-						<label htmlFor="answer" className="form-label">what is the answer for the security question</label>
-						<input
-							type="answer security question"
-							name="answer security question"
-							className="form-control"
-							value={form.security_answer}
-							onChange={handleChange}
-							required
-						/>
+
+					<div className="mb-4">
+						<label htmlFor="security_answer" className="form-label">Security Answer</label>
+						<input type="text" name="security_answer" className="form-control"
+						value={form.security_answer} onChange={handleChange} required />
 					</div>
 
 					<button type="submit" className="btn btn-success w-100">

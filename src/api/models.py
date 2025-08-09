@@ -15,8 +15,7 @@ class User(db.Model):
     dob = db.Column(db.Date)     
     security_question = db.Column(db.String(255), nullable=False)
     security_answer = db.Column(db.String(255), nullable=False)
-    def set_security_answer(self, answer):
-       self.security_answer_hash = generate_security_answer_hash(answer)
+    
 
     def serialize(self):
         return {

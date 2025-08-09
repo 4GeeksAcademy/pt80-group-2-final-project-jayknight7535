@@ -8,7 +8,6 @@ from flask_cors import CORS
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
-from .models import db, User
 from datetime import datetime
 
 api = Blueprint('api', __name__)
@@ -28,37 +27,38 @@ def handle_hello():
 
 
 
-#SignupEndpoint
-
+# Signup Endpoint
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     hashed = generate_password_hash(data['password'])
 
-
     dob_str = data.get("dob")
-    dob = datetime.strptime(dob_str, "%Y-%m-%d").date() 
+    dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
+
+    security_question = (data.get("security_question") or "").strip()
+    security_answer   = (data.get("security_answer")   or "").strip()
 
     user = User(
         email=data['email'],
         password=hashed,
         is_agent=data.get('is_agent', False),
         name=data.get("name"),
-        dob= dob  
-
+        dob=dob, 
+        security_question=security_question,
+        security_answer=security_answer,
     )
 
     db.session.add(user)
     db.session.commit()
 
-    token = create_access_token(identity= str (user.id)) # makes a token when a user signs up 
+    token = create_access_token(identity=str(user.id))  # tiny spacing cleanup
 
     return jsonify({
-        "msg" : "User created",
-        "token" : token,  # returns token that was created and stores it = 
-        "user" : user.serialize()
-        }), 201
-
+        "msg": "User created",
+        "token": token,
+        "user": user.serialize()
+    }), 201
 
 # login EndPoint
 
@@ -292,11 +292,28 @@ def get_agent_dashboard():
 
     serialized = []
     for form in forms:
-        renter = User.query.get(form.user_id)  # 🔥 THIS LINE
+        renter = User.query.get(form.user_id)
         serialized.append({
             **form.serialize(),
             "user_name": renter.name if renter else "Unknown",
-            "email": renter.email if renter else "Unknown"  # 🔥 AND THIS LINE
+            "email": renter.email if renter else "Unknown" 
         })
 
     return jsonify({"forms": serialized, "agent": user.serialize()}), 200
+
+
+
+@api.route('/renter/dashboard', methods=['GET'])
+@jwt_required()
+def renter_dashboard():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user or user.is_agent:
+        return jsonify({"msg": "Not allowed"}), 403
+
+    # latest form for this user (or None)
+    form = RenterForm.query.filter_by(user_id=current_user_id).order_by(RenterForm.id.desc()).first()
+    return jsonify({
+        "user": user.serialize(),
+        "form": form.serialize() if form else None
+    }), 200
