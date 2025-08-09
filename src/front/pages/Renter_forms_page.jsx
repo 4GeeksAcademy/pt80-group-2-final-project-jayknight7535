@@ -5,7 +5,12 @@ const RenterFormPage = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/renter/forms`) 
+      const token= sessionStorage.getItem("token")
+      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/renter/forms`,{
+        headers: {
+          "Authorization":`Bearer ${token}`
+        }
+      }) 
       const result = await resp.json()
       setData(result);
     };
@@ -14,7 +19,7 @@ const RenterFormPage = () => {
   }, []);
   const editRenterForm = async () => {
     const resp = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/renter_form/<int:id>`,
+      `${import.meta.env.VITE_BACKEND_URL}api/renter_form/<int:id>`,
       {
         method: "PUT",
         headers: {
