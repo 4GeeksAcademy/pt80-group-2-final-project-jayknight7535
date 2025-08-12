@@ -61,7 +61,7 @@ const RenterFormPage = () => {
     <div className= "container mt-5 pt-5">
       <div className="mb-3 ps-5" style={{fontSize: "50px", fontWeight: "bold"}}>Your Renter Information</div>
       <div>
-        <h2>Chance of approval</h2>
+        <h2>Chance of  approval</h2>
         {rating()}
       </div>
 

@@ -48,6 +48,7 @@ class RenterForm(db.Model):
     criminal_record:Mapped[bool]
     parking:Mapped[str]
     phone_number = db.Column(db.String(20), nullable=False) # 
+    employment: Mapped[str] = mapped_column(String(120), nullable=True)
 
     user = db.relationship('User', backref='renter_forms')
 
@@ -71,7 +72,8 @@ class RenterForm(db.Model):
             "bedrooms" : self.bedrooms,
             "criminal_record": self.criminal_record,
             "parking" : self.parking,
-            "phone_number" : self.phone_number
+            "phone_number" : self.phone_number,
+            "employment": self.employment,
         }
 
     
