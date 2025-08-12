@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash , check_password_hash
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
 from datetime import datetime
 
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -217,24 +218,38 @@ def delete_profile(id : int) -> tuple[str,int]:
 
 @api.route("/password-reset", methods=["POST"])
 def findEmail():
-    email=request.json("email")
-    user = db.session.scalars(
-        db.select(User)
-        .filter_by(email=email)
-    ).one_or_none()
-    if not email:
-        return jsonify(msg="No account with that email"), 401
-    
-@api.route("/verify-answer", methods=["POST"])
-def verify_security_answer():
     data = request.get_json()
     email = data.get("email")
-    answer = data.get("answer")
 
-    if not email or not answer:
-        return jsonify(msg="Email and answer are required."), 400
+    if not email:
+        return jsonify(msg="email is needed"), 400
 
-    user = db.session.scalar(db.select(User).filter_by(email=email))
+    user = db.session.scalars(
+        db.select(User).filter_by(email=email)
+    ).one_or_none()
+
+    if not user:
+        return jsonify(msg="no user with this email."), 404
+
+    token = create_access_token(identity=str(user.id)) 
+
+    return jsonify(
+        msg="User found.",
+        token=token
+    ), 200
+    
+@api.route("/verify-answer", methods=["POST"])
+@jwt_required()
+def verify_security_answer():
+    data = request.get_json(silent=True)
+
+    if not data or "answer" not in data:
+        return jsonify(msg="Answer is required."), 400
+
+    answer = data["security_answer"]
+    user_id = get_jwt_identity()
+
+    user = db.session.get(User, int(user_id)) 
     if not user:
         return jsonify(msg="User not found"), 404
 
@@ -242,6 +257,21 @@ def verify_security_answer():
         return jsonify(msg="Incorrect answer"), 401
 
     return jsonify(msg="Answer verified"), 200
+
+
+@api.route("/security-question", methods=["GET"])
+@jwt_required()
+def get_security_question():
+    user_id = get_jwt_identity()
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify(msg="User not found"), 404
+
+    if not user.security_question:
+        return jsonify(msg="No security question set."), 400
+
+    return jsonify(question=user.security_question), 200
     
 @api.route("/update-security-question", methods=["PUT"])
 @jwt_required()
@@ -275,8 +305,8 @@ def reset_password():
 
     user.set_password(new_password)  # make sure this hashes the password
     db.session.commit()
-
     return jsonify(msg="Password reset successful"), 200
+
 
 
 @api.route('/agent/dashboard', methods=['GET'])
