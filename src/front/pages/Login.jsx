@@ -37,7 +37,7 @@ export const Login = () => {
 			if (data.user.is_agent) {
 				navigate("/realtors-dashboard");
 			} else {
-				navigate("/renter-form");
+				navigate("/renters-dashboard");
 			}
 		} catch (err) {
 			setError("Something went wrong!");

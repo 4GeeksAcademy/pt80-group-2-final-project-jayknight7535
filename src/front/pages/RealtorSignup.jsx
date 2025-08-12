@@ -57,7 +57,7 @@ export const RealtorSignup = () => {
 
 	return (
 		<div
-			className="d-flex justify-content-center align-items-center"
+			className="d-flex justify-content-center align-items-center pt-5"
 			style={{
 				backgroundImage: `url(${signupImg})`,
 				backgroundSize: "cover",

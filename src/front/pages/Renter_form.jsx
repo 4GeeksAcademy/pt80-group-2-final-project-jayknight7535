@@ -275,3 +275,5 @@ export const RenterForm = () => {
     </div>
   );
 };
+
+export default RenterForm;

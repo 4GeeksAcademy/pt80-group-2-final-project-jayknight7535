@@ -112,26 +112,30 @@ def renter_form():
 
     if user.is_agent:
         return jsonify({"msg": "Sorry :( Agents cannot submit renter forms"}), 403
-    data = request.get_json()
+    
+
+    data = request.get_json() or {}
+
     
     try:
 
         move_in = datetime.strptime(data.get("move_in_date"), "%Y-%m-%d").date()
 
         form = RenterForm(
-             user_id=current_user_id,
+            user_id=current_user_id,
+            name=(data.get("user_name") or "").strip(),
+            email=(data.get("email") or "").strip(),
             income=data.get("income"),
             credit_score=data.get("credit_score"),
             pets=data.get("pets"),
             move_in_date=move_in,
-            email=data.get("email"),
-            user_name=data.get("user_name"),
             zip_code=data.get("zip_code"),
             budget=data.get("budget"),
             bedrooms=data.get("bedrooms"),
             criminal_record=data.get("criminal_record"),
             parking=data.get("parking"),
-            phone_number=data.get("phone_number")
+            phone_number=data.get("phone_number"),
+            employment=(data.get("employment") or "").strip(),
         )
 
         db.session.add(form)
@@ -164,6 +168,7 @@ def get_renter_forms():
 
 
 @api.route("/renter_form/<int:id>", methods=["PUT"])
+@jwt_required()
 def edit_renter_forms(id :int) -> tuple[str,int]:
     renter_form = db.session.scalars(
         db.select(renter_form).filter_by(id=id)
@@ -208,6 +213,7 @@ def delete_user(id : int ) -> tuple[str,int]:
     return "", 200
 
 @api.route("/renter_form/<int:id>", methods=["DELETE"])
+@jwt_required()
 def delete_profile(id : int) -> tuple[str,int]:
     renter_form= db.session.get(renter_form,id)
     db.session.delete(renter_form)
