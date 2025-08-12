@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import heroImage from "../assets/img/hero-renters.jpg";
 
 export const Login = () => {
@@ -7,6 +7,7 @@ export const Login = () => {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+
 	
 
 	const handleSubmit = async (ev) => {
@@ -14,7 +15,7 @@ export const Login = () => {
 		
 
 		try {
-			const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
+			const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/login`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
@@ -29,7 +30,7 @@ export const Login = () => {
 				return;
 			}
 
-			//Store token and user info
+			//Store token and srcuser info
 			sessionStorage.setItem("token", data.token);
 			sessionStorage.setItem("user", JSON.stringify(data.user));
 
@@ -93,10 +94,12 @@ export const Login = () => {
 				<button type="submit" className="btn btn-primary w-100">
 					Log In
 				</button>
-
-				 
 			</form>
+			<button type="button" onClick={() => navigate("/passwordreset")} class="btn btn-outline-dark">Reset Password
+			</button>
+			
 		</div>
+		
 	</div>
 );
 };

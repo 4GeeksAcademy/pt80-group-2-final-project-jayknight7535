@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import heroImage from "../assets/img/hero-renters.jpg";
 
 export const PasswordReset = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const PasswordReset = () => {
     }
 
     try {
-      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/reset-password`, {
+      const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/reset-password`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +33,7 @@ export const PasswordReset = () => {
 
       if (resp.ok) {
         sessionStorage.removeItem("resetEmail");
-        navigate("/renter-form");
+        navigate("/login")
       } else {
         setError(data.msg || "Failed to reset password.");
       }
@@ -54,8 +55,8 @@ export const PasswordReset = () => {
       >
     <div className="container bg-white shadow p-4 rounded"
 			style={{ maxWidth: "500px" }}>
-    <h2 text-center mb-4>Reset password</h2>
-    <form onSubmit={handleSubmit} className="mt-5 pt-5">
+    <h2 className="text-center mb-4">Reset password</h2>
+    <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label className="form-label">New Password</label>
         <input
