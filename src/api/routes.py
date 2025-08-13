@@ -1,11 +1,10 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User , RenterForm
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask import request, jsonify
+from flask import request, jsonify, url_for, Blueprint, Flask
 from werkzeug.security import generate_password_hash , check_password_hash
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
 from datetime import datetime
@@ -249,7 +248,7 @@ def findEmail():
 def verify_security_answer():
     data = request.get_json(silent=True)
 
-    if not data or "answer" not in data:
+    if not data or "security_answer" not in data.keys():
         return jsonify(msg="Answer is required."), 400
 
     answer = data["security_answer"]
@@ -259,7 +258,7 @@ def verify_security_answer():
     if not user:
         return jsonify(msg="User not found"), 404
 
-    if not user.check_security_answer(answer):
+    if not user.security_answer == answer:
         return jsonify(msg="Incorrect answer"), 401
 
     return jsonify(msg="Answer verified"), 200
@@ -309,7 +308,7 @@ def reset_password():
     if not user:
         return jsonify(msg="User not found"), 404
 
-    user.set_password(new_password)  # make sure this hashes the password
+    user.set_password=new_password  # make sure this hashes the password
     db.session.commit()
     return jsonify(msg="Password reset successful"), 200
 

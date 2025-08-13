@@ -49,10 +49,10 @@ useEffect(() => {
       const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/verify-answer`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization":`Bearer ${token}` },
-        body: JSON.stringify({ answer }),
+        body: JSON.stringify({ security_answer: answer }),
       })
 
-      const data = await resp.json();
+      const data = await resp.json();  
 
       if (resp.ok) {
         navigate("/newpassword"); 
